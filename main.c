@@ -76,7 +76,7 @@ t_lst_indexed_node  *parse_args(int argc, char **argv, t_data *data)
             if (!str_isnum(*arg_lst))
                 return (ft_free_split(tmp_arg_lst), error_exit(data, "Error: Se ha encontrado un carácter no numérico\n", 50),NULL);
 
-            number = ft_atoi(*arg_lst);
+            number = ft_atol(*arg_lst);
             printf("%lu\n", number);
             if(number < INT_MIN || number > INT_MAX)
                 return (ft_free_split(tmp_arg_lst), error_exit(data, "Error: Uno de los numeros introducidos excede del rango de int\n", 63),NULL);
