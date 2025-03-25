@@ -1,5 +1,4 @@
 # Configuración básica
-CC      = cc
 CFLAGS  = -Wall -Wextra -Werror -g -O0
 NAME    = push_swap.out
 LIB_DIR = libft
