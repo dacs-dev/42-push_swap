@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-void find_max_and_push(t_data *data)
+/* void find_max_and_push(t_data *data)
 {
 	t_lst_indexed_node *current;
 	int                 max_val = INT_MIN;
@@ -73,4 +73,4 @@ void chunk_sort(t_data *data)
 	{
 		find_max_and_push(data);
 	}
-}
+} */
