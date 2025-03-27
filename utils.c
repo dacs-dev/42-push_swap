@@ -42,3 +42,12 @@ int is_sorted(t_lst_indexed_node *stack)
 	}
 	return 1;
 }
+
+
+/* 
+    stack a 1, 2 ,3 
+
+    stack b []
+
+
+ */

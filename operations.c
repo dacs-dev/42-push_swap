@@ -34,8 +34,8 @@ void sa(t_data *data)
 
 	data->stack_a = second;
 	data->operations++;
-	print_list(data->stack_a, "Stack A After sa");
-	print_list(data->stack_b, "Stack B After sa");
+	print_list(data->stack_a, "Stack A After sa\n");
+	print_list(data->stack_b, "Stack B After sa\n");
 }
 
 void sb(t_data *data)
@@ -57,16 +57,16 @@ void sb(t_data *data)
 	first->prev = second;
 	data->stack_b = second;
 	data->operations++;
-	print_list(data->stack_a, "Stack A After sb");
-	print_list(data->stack_b, "Stack B After sb");
+	print_list(data->stack_a, "Stack A After sb\n");
+	print_list(data->stack_b, "Stack B After sb\n");
 }
 
 void ss(t_data *data)
 {
 	sa(data);
 	sb(data);
-	print_list(data->stack_a, "Stack A After ss");
-	print_list(data->stack_b, "Stack B After ss");
+	print_list(data->stack_a, "Stack A After ss\n");
+	print_list(data->stack_b, "Stack B After ss\n");
 }
 
 void pa(t_data *data)
@@ -83,8 +83,8 @@ void pa(t_data *data)
 		data->size_b--;
 		data->size_a++;
 		data->operations++;
-		print_list(data->stack_a, "Stack A After pa");
-		print_list(data->stack_b, "Stack B After pa");
+		print_list(data->stack_a, "Stack A After pa\n");
+		print_list(data->stack_b, "Stack B After pa\n");
 	}
 }
 
@@ -102,8 +102,8 @@ void pb(t_data *data)
 		data->size_a--;
 		data->size_b++;
 		data->operations++;
-		print_list(data->stack_a, "Stack A After pb");
-		print_list(data->stack_b, "Stack B After pb");
+		print_list(data->stack_a, "Stack A After pb\n");
+		print_list(data->stack_b, "Stack B After pb\n");
 	}
 }
 
@@ -111,8 +111,9 @@ void ra(t_data *data)
 {
 	t_lst_indexed_node *last;
 	t_lst_indexed_node *second;
+
 	if (!data->stack_a || data->size_a < 2)
-		return;
+		return ;
 	last = ft_lsti_last(data->stack_a);
 	second = data->stack_a->next;
 	last->next = data->stack_a;
@@ -121,8 +122,8 @@ void ra(t_data *data)
 	second->prev = NULL;
 	data->stack_a = second;
 	data->operations++;
-	print_list(data->stack_a, "Stack A After ra");
-	print_list(data->stack_b, "Stack B After ra");
+	print_list(data->stack_a, "Stack A After ra\n");
+	print_list(data->stack_b, "Stack B After ra\n");
 }
 
 void rb(t_data *data)
@@ -139,8 +140,8 @@ void rb(t_data *data)
 	second->prev = NULL;
 	data->stack_b = second;
 	data->operations++;
-	print_list(data->stack_a, "Stack A After rb");
-	print_list(data->stack_b, "Stack B After rb");
+	print_list(data->stack_a, "Stack A After rb\n");
+	print_list(data->stack_b, "Stack B After rb\n");
 }
 
 void rr(t_data *data)
@@ -148,8 +149,8 @@ void rr(t_data *data)
 	ra(data);
 	rb(data);
 	data->operations++;
-	print_list(data->stack_a, "Stack A After rr");
-	print_list(data->stack_b, "Stack B After rr");
+	print_list(data->stack_a, "Stack A After rr\n");
+	print_list(data->stack_b, "Stack B After rr\n");
 }
 
 void rra(t_data *data)
@@ -166,8 +167,8 @@ void rra(t_data *data)
 	data->stack_a->prev = last;
 	data->stack_a = last;
 	data->operations++;
-	print_list(data->stack_a, "Stack A After rra");
-	print_list(data->stack_b, "Stack B After rra");
+	print_list(data->stack_a, "Stack A After rra\n");
+	print_list(data->stack_b, "Stack B After rra\n");
 }
 void rrb(t_data *data)
 {
@@ -183,8 +184,8 @@ void rrb(t_data *data)
 	data->stack_b->prev = last;
 	data->stack_b = last;
 	data->operations++;
-	print_list(data->stack_a, "Stack A After rrb");
-	print_list(data->stack_b, "Stack B After rrb");
+	print_list(data->stack_a, "Stack A After rrb\n");
+	print_list(data->stack_b, "Stack B After rrb\n");
 }
 
 void rrr(t_data *data)
@@ -192,6 +193,6 @@ void rrr(t_data *data)
 	rra(data);
 	rrb(data);
 	data->operations++;
-	print_list(data->stack_a, "Stack A After rrr");
-	print_list(data->stack_b, "Stack B After rrr");
+	print_list(data->stack_a, "Stack A After rrr\n");
+	print_list(data->stack_b, "Stack B After rrr\n");
 }

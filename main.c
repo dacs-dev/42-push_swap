@@ -34,7 +34,7 @@ void	print_list(t_lst_indexed_node *stack, const char *stack_name)
 
 	while (current != NULL)
 	{
-		printf("%-3d │ %-6d │ %-6lu\n", position++, current->value, current->index);
+		printf("%-3d │ %-6d │ %-6u\n", position++, current->value, current->index);
 		current = current->next;
 	}
 
@@ -55,36 +55,37 @@ void error_exit(t_data *data, char *msg, int msg_size, char** split)
 
 void	check_arg_lst(t_data *data, char **arg_lst, unsigned int *size)
 {
-	long	number;
-	char	**tmp_arg_lst;
+	long				number;
+	char				**tmp_arg_lst;
+	t_lst_indexed_node	*new_node;
 
 	tmp_arg_lst = arg_lst;
 	while (*arg_lst)
 	{
 		if (!str_isnum(*arg_lst))
-			return (error_exit(data,NAN_ERR, 50, arg_lst), NULL);
+			error_exit(data, NAN_ERR, 50, arg_lst);
 		number = ft_atol(*arg_lst);
 		if (number < INT_MIN || number > INT_MAX)
-			return (ft_free_split(tmp_arg_lst), error_exit(data, LIMIT_ERR, 63), NULL);
+			error_exit(data, LIMIT_ERR, 63, NULL);
 
 		if (ft_lsti_find(data->stack_a, (int)number))
-			return (ft_free_split(tmp_arg_lst), error_exit(data, DUP_ERR, 43), NULL);
-		t_lst_indexed_node *new_node = ft_lsti_newnode((int) number);
+			error_exit(data, DUP_ERR, 43, NULL);
+		new_node = ft_lsti_newnode((int) number);
 		if (!new_node)
-			return (ft_free_split(tmp_arg_lst), error_exit(data, MALOC_ERR, 24), NULL);
-		new_node->index = size;
+			error_exit(data, MALOC_ERR, 24, NULL);
+		new_node->index = *size;
 		ft_lsti_addback(&(data->stack_a), new_node);
 		arg_lst++;
-		size++;
+		*size = *size + 1;
 	}
 	ft_free_split(tmp_arg_lst);
 }
 
-t_lst_indexed_node *parse_args(int argc, char **argv, t_data *data)
+t_lst_indexed_node	*parse_args(int argc, char **argv, t_data *data)
 {
-	int           	i;
+	int				i;
 	unsigned int	size;
-	char        	**arg_lst;
+	char			**arg_lst;
 
 	i = 1;
 	size = 0;
@@ -92,8 +93,7 @@ t_lst_indexed_node *parse_args(int argc, char **argv, t_data *data)
 	{
 		arg_lst = ft_split(argv[i], ' ');
 		if (!arg_lst)
-			return (error_exit(data,
-					"Error: Fallo al dividir argumentos\n", 35), NULL);
+			error_exit(data, "Error: Fallo al dividir argumentos\n", 35, NULL);
 		check_arg_lst(data, arg_lst, &size);
 		i++;
 	}
@@ -103,7 +103,7 @@ t_lst_indexed_node *parse_args(int argc, char **argv, t_data *data)
 
 
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_data *data;
 
@@ -120,10 +120,11 @@ int main(int argc, char **argv)
 
 	if (!parse_args(argc, argv, data))
 		return (1);
-	if (data->stack_a)
-		print_list(data->stack_a, "Stack A");
+	
 
 	assign_indices(data);
+	if (data->stack_a)
+		print_list(data->stack_a, "Stack A");
 	push_swap(data);
 	print_list(data->stack_a, "Stack A"); //DELETE ME
 	print_list(data->stack_b, "Stack B"); //DELETE ME

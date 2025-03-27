@@ -16,11 +16,11 @@ static int	*create_int_lst(t_data *data)
 {
 	int					*values;
 	t_lst_indexed_node	*current;
-	int					i;
+	unsigned int			i;
 
 	values = malloc(data->size_a * sizeof(int));
 	if (values == NULL)
-		error_exit(data, "Error en maloc de create_int_lst\n", 34);
+		error_exit(data, "Error en maloc de create_int_lst\n", 34, NULL);
 	i = 0;
 	current = data->stack_a;
 	while (i < data-> size_a)
@@ -34,22 +34,23 @@ static int	*create_int_lst(t_data *data)
 void	assign_indices(t_data *data)
 {
 	int					*values;
-	int					i;
+	unsigned int					i;
 	t_lst_indexed_node	*current;
 
 	values = create_int_lst(data);
 	ft_lstsort_int(values, data->size_a);
 	current = data->stack_a;
-	while (current)
+	while (current != NULL)
 	{
-		i = 0;
-		while (i < data-> size_a)
+		i = 1;
+		while (i <= data-> size_a)
 		{
-			if (current->value == values[i])
+			if (current->value == *(values + i))
 			{
-				current->index = i++;
+				current->index = i;
 				break ;
 			}
+			i++;
 		}
 		current = current->next;
 	}

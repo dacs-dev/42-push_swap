@@ -16,6 +16,7 @@
 # include "libft/libft.h" /* Se asume que usas funciones de la libft */
 # include <limits.h>
 # include <stdlib.h>
+# include <stdio.h>
 # include <unistd.h>
 
 # define RA 1
@@ -25,12 +26,12 @@
 # define DUP_ERR "Error: Se ha encontrado un valor duplicado\n"
 # define LIMIT_ERR "Error: Rango de int excedido\n"
 # define MALOC_ERR "Error: Fallo de memoria\n"
-# define ARG_ERR"Es necesario incluir 1 argumento por lo menos\n"
+# define ARG_ERR "Es necesario incluir 1 argumento por lo menos\n"
 
 typedef struct s_lst_indexed_node
 {
 	int							value;
-	unsigned long				index;
+	unsigned int				index;
 	struct s_lst_indexed_node	*next;
 	struct s_lst_indexed_node	*prev;
 }	t_lst_indexed_node;
@@ -44,8 +45,8 @@ typedef struct s_data
 {
 	t_lst_indexed_node	*stack_a;
 	t_lst_indexed_node	*stack_b;
-	unsigned long		size_a;
-	unsigned long		size_b;
+	unsigned int		size_a;
+	unsigned int		size_b;
 	int					min_value;
 	int					max_value;
 	int					operations;
@@ -81,11 +82,10 @@ void				rrb(t_data *data);
 void				rrr(t_data *data);
 
 void				assign_indices(t_data *data);
-int					*create_int_lst(t_data *data);
 void				k_sort(t_data *data, int k);
 unsigned int		calc_chunkn(unsigned int size);
 void				push_swap(t_data *data);
-int					error_exit(t_data *data, char *msg, int msg_size);
+void error_exit(t_data *data, char *msg, int msg_size, char** split);
 // Utilidades
 int					str_isnum(char *str);
 void				ft_free_split(char **arr);

@@ -1,6 +1,6 @@
 # Configuración básica
 CFLAGS  = -Wall -Wextra -Werror -g -O0
-NAME    = push_swap.out
+NAME    = push_swap
 LIB_DIR = libft
 LIB_NAME = $(LIB_DIR)/libft.a
 SRC     = $(wildcard *.c)   # <-- Usa todos los .c del directorio actual

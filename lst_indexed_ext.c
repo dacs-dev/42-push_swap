@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-int ft_lsti_find(t_lst_indexed_node *node, int num)
+int	ft_lsti_find(t_lst_indexed_node *node, int num)
 {
 	while (node)
 	{
@@ -23,7 +23,7 @@ int ft_lsti_find(t_lst_indexed_node *node, int num)
 	return (0);
 }
 
-int ft_lsti_find_smallest(t_lst_indexed_node *node)
+int	ft_lsti_find_smallest(t_lst_indexed_node *node)
 {
 	int num;
 
@@ -58,11 +58,12 @@ t_lst_indexed_node	*ft_lsti_addback(t_lst_indexed_node **lst,
 	return (*lst);
 }
 
-void free_stack(t_lst_indexed_node *stack)
+void	free_stack(t_lst_indexed_node *stack)
 {
-	t_lst_indexed_node *current = stack;
-	t_lst_indexed_node *next;
+	t_lst_indexed_node	*current;
+	t_lst_indexed_node	*next;
 
+	current = stack;
 	while (current)
 	{
 		next = current->next;
