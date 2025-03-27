@@ -42,10 +42,10 @@ void	assign_indices(t_data *data)
 	current = data->stack_a;
 	while (current != NULL)
 	{
-		i = 1;
-		while (i <= data-> size_a)
+		i = 0;
+		while (i < data-> size_a)
 		{
-			if (current->value == *(values + i - 1))
+			if (current->value == *(values + i))
 			{
 				current->index = i;
 				break ;

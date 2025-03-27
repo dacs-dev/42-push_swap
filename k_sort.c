@@ -85,22 +85,22 @@ void	k_sort(t_data *data, unsigned int k)
 	unsigned int	max_index;
 	unsigned int	i;
 
-	i = k;
-	chunk_size = (data -> size_a / k) + data -> size_a % k;
-	while (i > 0)
+	i = 1;
+	chunk_size = (data -> size_a + k - 1) / k;
+	while (i <= k || min_index == 0)
 	{
-		if (i == 1)
+		max_index = data -> size_a - 1 - (i - 1) * chunk_size;
+		if(max_index >= chunk_size + 1)
+			min_index = max_index - chunk_size + 1;
+		else
+			min_index = 0;
+		if (min_index == 0)
 		{
-			chunk_size -= data -> size_a % k;
-			min_index = (i -1) * chunk_size;
-			max_index = (i * chunk_size) - 1;
+			max_index = chunk_size;
 		}
-		min_index = (i -1) * chunk_size;
-		max_index = (i * chunk_size) - 1;
 		printf("Chunk_size [%u] k[%u] -- Min [%u] Max [%u]\n", chunk_size, i, min_index, max_index);
 		move_chunk_b(data, min_index, max_index);
-		move_chunk_a(data);
-		i--;
-		
+		i++;
 	}
+	move_chunk_a(data);
 }
