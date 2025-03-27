@@ -45,7 +45,7 @@ void	assign_indices(t_data *data)
 		i = 1;
 		while (i <= data-> size_a)
 		{
-			if (current->value == *(values + i))
+			if (current->value == *(values + i - 1))
 			{
 				current->index = i;
 				break ;

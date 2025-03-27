@@ -56,7 +56,7 @@ void	move_chunk_b(t_data *data, unsigned int min_index,
 		rotate_type = calc_rotate_direction(data, min_index);
 		current = data -> stack_a;
 		printf("Index loop: current index [%u], max index [%u] min index [%u]\n", current->index, max_index, min_index);
-		while (current->index != max_index)
+		while (current->index != min_index)
 		{
 			printf("current index [%u], max index [%u] min index [%u]\n", current->index, max_index, min_index);
 
@@ -64,11 +64,11 @@ void	move_chunk_b(t_data *data, unsigned int min_index,
 				ra(data);
 			else
 				rra(data);
-			current = current ->next;
+			current = data -> stack_a;
 		}
 		pb(data);
 
-		max_index--;
+		min_index++;
 	}
 }
 
@@ -78,7 +78,7 @@ void	move_chunk_a(t_data *data)
 		pa(data);
 }
 
-void	k_sort(t_data *data, int k)
+void	k_sort(t_data *data, unsigned int k)
 {
 	unsigned int	chunk_size;
 	unsigned int	min_index;
@@ -90,12 +90,17 @@ void	k_sort(t_data *data, int k)
 	while (i > 0)
 	{
 		if (i == 1)
+		{
 			chunk_size -= data -> size_a % k;
+			min_index = (i -1) * chunk_size;
+			max_index = (i * chunk_size) - 1;
+		}
 		min_index = (i -1) * chunk_size;
 		max_index = (i * chunk_size) - 1;
 		printf("Chunk_size [%u] k[%u] -- Min [%u] Max [%u]\n", chunk_size, i, min_index, max_index);
 		move_chunk_b(data, min_index, max_index);
 		move_chunk_a(data);
 		i--;
+		
 	}
 }

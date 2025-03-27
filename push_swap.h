@@ -82,7 +82,7 @@ void				rrb(t_data *data);
 void				rrr(t_data *data);
 
 void				assign_indices(t_data *data);
-void				k_sort(t_data *data, int k);
+void				k_sort(t_data *data, unsigned int k);
 unsigned int		calc_chunkn(unsigned int size);
 void				push_swap(t_data *data);
 void error_exit(t_data *data, char *msg, int msg_size, char** split);
