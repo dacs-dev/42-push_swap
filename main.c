@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcid-san <dcid-san@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: krusty <krusty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:36:53 by dcid-san          #+#    #+#             */
-/*   Updated: 2024/11/20 15:44:50 by dcid-san         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:32:00 by krusty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft/libft.h"
+
 #include "push_swap.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,13 +29,12 @@ void print_list(t_lst_indexed_node *stack, const char *stack_name)
 	printf("═════ %s ═════\n", stack_name);
 	printf("Pos │ Valor  │ Índice\n");
 
-	// Para listas circulares: while (1) + break cuando vuelva al inicio
-	// Para listas no circulares: while (current != NULL)
+
 	while (current != NULL)
-	{ // Solo para listas lineales
+	{
 		printf("%-3d │ %-6d │ %-6lu\n", position++, current->value, current->index);
 		current = current->next;
-	} // Versión híbrida
+	}
 
 	printf("═════════════════════\n\n");
 }
@@ -114,32 +113,31 @@ int is_sorted(t_lst_indexed_node *stack)
 	return 1;
 }
 
-void assign_indices(t_data *data)
+void	assign_indices(t_data *data)
 {
-	int  size = data->size_a;
-	int *values = malloc(size * sizeof(int));
+	int					*values;
+	int					i;
+	t_lst_indexed_node	*current;
 
-	// Almacenar valores en un array
-	t_lst_indexed_node *current = data->stack_a;
-	for (int i = 0; i < size; i++)
+	values = malloc(data->size_a * sizeof(int));
+	i = 0;
+	current = data->stack_a;
+	while (i < data-> size_a)
 	{
-		values[i] = current->value;
+		values[i++] = current->value;
 		current = current->next;
 	}
-
-	// Ordenar el array
-	ft_lstsort_int(values, size);
-
-	// Asignar índices según la posición en el array ordenado
+	ft_lstsort_int(values, data->size_a);
 	current = data->stack_a;
 	while (current)
 	{
-		for (int i = 0; i < size; i++)
+		i = 0;
+		while (i < data-> size_a)
 		{
 			if (current->value == values[i])
 			{
-				current->index = i;
-				break;
+				current->index = i++;
+				break ;
 			}
 		}
 		current = current->next;

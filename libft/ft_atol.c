@@ -1,34 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcid-san <dcid-san@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krusty <krusty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 18:15:22 by dcid-san          #+#    #+#             */
-/*   Updated: 2025/03/17 20:03:57 by dcid-san         ###   ########.fr       */
+/*   Updated: 2025/03/27 15:29:41 by krusty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-long ft_atol(const char *str)
-{
-	long num;
-	int  is_neg;
+#include "libft.h"
+#include "limits.h"
 
-	is_neg = 1;
-	num = 0;
-	while (*str == ' ' || *str == '\f' || *str == '\t' || *str == '\n' || *str == '\r' || *str == '\v')
+char	*advance_spaces(const char *str)
+{
+	while (*str == ' ' || *str == '\f' || *str == '\t'
+		|| *str == '\n' || *str == '\r' || *str == '\v')
 		str++;
+	return (str);
+}
+
+int	ft_atol(const char *str)
+{
+	long	result;
+	int		sign;
+
+	result = 0;
+	sign = 1;
+	str = advance_spaces(str);
 	if (*str == '-' || *str == '+')
 	{
-		if (*str == '-')
-			is_neg = -1;
-		str++;
+		if (*str++ == '-')
+			sign = -1;
 	}
 	while (*str >= '0' && *str <= '9')
 	{
-		num = num * 10 + (*str - '0');
+		if (result > (LONG_MAX / 10) || (result == (LONG_MAX / 10)
+				&& (*str - '0') > (LONG_MAX % 10)))
+		{
+			if (sign == 1)
+				return (LONG_MAX);
+			else
+				return (LONG_MIN);
+		}
+		result = result * 10 + (*str - '0');
 		str++;
 	}
-	return (num * is_neg);
+	return (result * sign);
 }
+
