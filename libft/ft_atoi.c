@@ -13,7 +13,7 @@
 #include "libft.h"
 #include "limits.h"
 
-char	*advance_spaces(const char *str)
+const char	*advance_spaces(const char *str)
 {
 	while (*str == ' ' || *str == '\f' || *str == '\t'
 		|| *str == '\n' || *str == '\r' || *str == '\v')

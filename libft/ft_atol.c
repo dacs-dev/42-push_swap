@@ -13,7 +13,7 @@
 #include "libft.h"
 #include "limits.h"
 
-char	*advance_spaces(const char *str)
+const char	*advance_spaces(const char *str)
 {
 	while (*str == ' ' || *str == '\f' || *str == '\t'
 		|| *str == '\n' || *str == '\r' || *str == '\v')
@@ -21,7 +21,7 @@ char	*advance_spaces(const char *str)
 	return (str);
 }
 
-int	ft_atol(const char *str)
+long	ft_atol(const char *str)
 {
 	long	result;
 	int		sign;

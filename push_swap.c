@@ -67,8 +67,10 @@ void sort_small_list(t_data *data)
 }
 void push_swap(t_data *data)
 {
-	if (data->size_a > 1)
+	if (data->size_a > 1 && data -> size_a < 6)
 	{
 		sort_small_list(data);
 	}
+	else if (data -> size_a > 0)
+		k_sort(data, calc_chunkn(data -> size_a));
 }
