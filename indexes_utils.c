@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   indexes_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcid-san <dcid-san@student.42madrid.com>   #+#  +:+       +#+        */
+/*   By: krusty <krusty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-27 16:04:03 by dcid-san          #+#    #+#             */
-/*   Updated: 2025-03-27 16:04:03 by dcid-san         ###   ########.fr       */
+/*   Created: 2025/03/27 16:04:03 by dcid-san          #+#    #+#             */
+/*   Updated: 2025/03/29 00:41:45 by krusty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	*create_int_lst(t_data *data)
 
 	values = malloc(data->size_a * sizeof(int));
 	if (values == NULL)
-		error_exit(data, "Error en maloc de create_int_lst\n", 34, NULL);
+		error_exit(data, MALLOC_ERR, 24, NULL);
 	i = 0;
 	current = data->stack_a;
 	while (i < data-> size_a)

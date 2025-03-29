@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   operations.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcid-san <dcid-san@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: krusty <krusty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:32:56 by dcid-san          #+#    #+#             */
-/*   Updated: 2024/11/20 15:33:02 by dcid-san         ###   ########.fr       */
+/*   Updated: 2025/03/28 22:55:01 by krusty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include <stdio.h>
 
-void sa(t_data *data)
+void sa(t_data *data, int show_msg)
 {
 	t_lst_indexed_node *first;
 	t_lst_indexed_node *second;
@@ -34,11 +34,13 @@ void sa(t_data *data)
 
 	data->stack_a = second;
 	data->operations++;
-	print_list(data->stack_a, "Stack A After sa\n");
-	print_list(data->stack_b, "Stack B After sa\n");
+	//print_list(data->stack_a, "Stack A After sa\n");
+	//print_list(data->stack_b, "Stack B After sa\n");
+	if (show_msg)
+		write(1, "sa\n", 3);
 }
 
-void sb(t_data *data)
+void sb(t_data *data, int show_msg)
 {
 	t_lst_indexed_node *first;
 	t_lst_indexed_node *second;
@@ -57,16 +59,21 @@ void sb(t_data *data)
 	first->prev = second;
 	data->stack_b = second;
 	data->operations++;
-	print_list(data->stack_a, "Stack A After sb\n");
-	print_list(data->stack_b, "Stack B After sb\n");
+	//print_list(data->stack_a, "Stack A After sb\n");
+	//print_list(data->stack_b, "Stack B After sb\n");
+	if (show_msg)
+		write(1, "sb\n", 3);
+
 }
 
 void ss(t_data *data)
 {
-	sa(data);
-	sb(data);
-	print_list(data->stack_a, "Stack A After ss\n");
-	print_list(data->stack_b, "Stack B After ss\n");
+	sa(data, 0);
+	sb(data, 0);
+	data->operations--;
+	//print_list(data->stack_a, "Stack A After ss\n");
+	//print_list(data->stack_b, "Stack B After ss\n");
+	write(1, "ss\n", 3);
 }
 
 void pa(t_data *data)
@@ -83,8 +90,9 @@ void pa(t_data *data)
 		data->size_b--;
 		data->size_a++;
 		data->operations++;
-		print_list(data->stack_a, "Stack A After pa\n");
-		print_list(data->stack_b, "Stack B After pa\n");
+		// //print_list(data->stack_a, "Stack A After pa\n");
+		// //print_list(data->stack_b, "Stack B After pa\n");
+		write(1, "pa\n", 3);
 	}
 }
 
@@ -102,12 +110,13 @@ void pb(t_data *data)
 		data->size_a--;
 		data->size_b++;
 		data->operations++;
-		print_list(data->stack_a, "Stack A After pb\n");
-		print_list(data->stack_b, "Stack B After pb\n");
+		//print_list(data->stack_a, "Stack A After pb\n");
+		//print_list(data->stack_b, "Stack B After pb\n");
+		write(1, "pb\n", 3);
 	}
 }
 
-void ra(t_data *data)
+void ra(t_data *data, int show_msg)
 {
 	t_lst_indexed_node *last;
 	t_lst_indexed_node *second;
@@ -122,11 +131,14 @@ void ra(t_data *data)
 	second->prev = NULL;
 	data->stack_a = second;
 	data->operations++;
-	print_list(data->stack_a, "Stack A After ra\n");
-	print_list(data->stack_b, "Stack B After ra\n");
+	//print_list(data->stack_a, "Stack A After ra\n");
+	//print_list(data->stack_b, "Stack B After ra\n");
+	if (show_msg)
+		write(1, "ra\n", 3);
+
 }
 
-void rb(t_data *data)
+void rb(t_data *data, int show_msg)
 {
 	t_lst_indexed_node *last;
 	t_lst_indexed_node *second;
@@ -140,20 +152,24 @@ void rb(t_data *data)
 	second->prev = NULL;
 	data->stack_b = second;
 	data->operations++;
-	print_list(data->stack_a, "Stack A After rb\n");
-	print_list(data->stack_b, "Stack B After rb\n");
+	//print_list(data->stack_a, "Stack A After rb\n");
+	//print_list(data->stack_b, "Stack B After rb\n");
+	if (show_msg)
+		write(1, "rb\n", 3);
+
 }
 
 void rr(t_data *data)
 {
-	ra(data);
-	rb(data);
-	data->operations++;
-	print_list(data->stack_a, "Stack A After rr\n");
-	print_list(data->stack_b, "Stack B After rr\n");
+	ra(data, 0);
+	rb(data, 0);
+	data->operations--;
+	//print_list(data->stack_a, "Stack A After rr\n");
+	//print_list(data->stack_b, "Stack B After rr\n");
+	write(1, "rr\n", 3);
 }
 
-void rra(t_data *data)
+void rra(t_data *data, int show_msg)
 {
 	t_lst_indexed_node *last;
 	t_lst_indexed_node *second_last;
@@ -167,10 +183,12 @@ void rra(t_data *data)
 	data->stack_a->prev = last;
 	data->stack_a = last;
 	data->operations++;
-	print_list(data->stack_a, "Stack A After rra\n");
-	print_list(data->stack_b, "Stack B After rra\n");
+	//print_list(data->stack_a, "Stack A After rra\n");
+	//print_list(data->stack_b, "Stack B After rra\n");
+	if (show_msg)
+		write(1, "rra\n", 4);
 }
-void rrb(t_data *data)
+void rrb(t_data *data, int show_msg)
 {
 	t_lst_indexed_node *last;
 	t_lst_indexed_node *second_last;
@@ -184,15 +202,18 @@ void rrb(t_data *data)
 	data->stack_b->prev = last;
 	data->stack_b = last;
 	data->operations++;
-	print_list(data->stack_a, "Stack A After rrb\n");
-	print_list(data->stack_b, "Stack B After rrb\n");
+	//print_list(data->stack_a, "Stack A After rrb\n");
+	//print_list(data->stack_b, "Stack B After rrb\n");
+	if (show_msg)
+		write(1, "rrb\n", 4);
 }
 
 void rrr(t_data *data)
 {
-	rra(data);
-	rrb(data);
-	data->operations++;
-	print_list(data->stack_a, "Stack A After rrr\n");
-	print_list(data->stack_b, "Stack B After rrr\n");
+	rra(data, 0);
+	rrb(data, 0);
+	data->operations--;
+	//print_list(data->stack_a, "Stack A After rrr\n");
+	//print_list(data->stack_b, "Stack B After rrr\n");
+	write(1, "rrr\n", 4);
 }

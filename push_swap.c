@@ -8,7 +8,7 @@ void sort_two(t_data *data)
 	first = data->stack_a->value;
 	second = data->stack_a->next->value;
 	if (first > second)
-		sa(data);
+		sa(data, 1);
 }
 
 void sort_three(t_data *data)
@@ -22,25 +22,25 @@ void sort_three(t_data *data)
 	third = data->stack_a->next->next->value;
 	// Caso: 2 1 3
 	if (first > second && second < third && first < third)
-		sa(data);
+		sa(data, 1);
 	// Caso: 3 1 2
 	else if (first > second && second < third && first > third)
-		ra(data);
+		ra(data, 1);
 	// Caso: 3 2 1
 	else if (first > second && second > third)
 	{
-		sa(data);
-		rra(data);
+		sa(data, 1);
+		rra(data, 1);
 	}
 	// Caso: 1 3 2
 	else if (first < second && second > third && first < third)
 	{
-		sa(data);
-		ra(data);
+		sa(data, 1);
+		ra(data, 1);
 	}
 	// Caso: 2 3 1
 	else if (first < second && second > third && first > third)
-		rra(data);
+		rra(data, 1);
 }
 void sort_four_five(t_data *data)
 {
@@ -50,7 +50,7 @@ void sort_four_five(t_data *data)
 		if (data->stack_a->value == ft_lsti_find_smallest(data->stack_a))
 			pb(data);
 		else
-			ra(data);
+			ra(data, 1);
 	}
 	sort_three(data); // Ordenar los 3 restantes en A
 	while (data->stack_b)

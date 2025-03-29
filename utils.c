@@ -1,17 +1,13 @@
 #include "push_swap.h"
 
-int str_isnum(char *str)
-{
+int str_isnum(char *str) {
     if (!str || !*str)
         return (0);
-    if (*str == '-' || *str == '+')
-        str++;
-    while (*str)
-    {
-        if (!ft_isdigit(*str))
+    if ((*str == '-' || *str == '+') && !*++str)
+        return (0);
+    while (*str) 
+        if (!ft_isdigit(*str++))
             return (0);
-        str++;
-    }
     return (1);
 }
 
@@ -22,7 +18,7 @@ void	ft_free_split(char **arr)
 	if (arr != NULL)
     {
         tmp = arr;
-        while (*tmp)
+        while (*tmp != NULL)
         {
             free(*tmp);
             tmp++;
@@ -31,7 +27,7 @@ void	ft_free_split(char **arr)
     }
 }
 
-int is_sorted(t_lst_indexed_node *stack)
+int ft_lsti_is_sorted(t_lst_indexed_node *stack)
 {
 
 	while (stack->next)
@@ -42,6 +38,7 @@ int is_sorted(t_lst_indexed_node *stack)
 	}
 	return 1;
 }
+
 
 
 /* 

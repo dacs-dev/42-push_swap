@@ -6,7 +6,7 @@
 /*   By: krusty <krusty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:36:53 by dcid-san          #+#    #+#             */
-/*   Updated: 2025/03/27 14:32:00 by krusty           ###   ########.fr       */
+/*   Updated: 2025/03/29 01:42:14 by krusty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,14 @@ void	print_list(t_lst_indexed_node *stack, const char *stack_name)
 
 void error_exit(t_data *data, char *msg, int msg_size, char** split)
 {
+	(void) *msg;
+	(void) msg_size;
 	ft_free_split(split);
 	free_stack(data->stack_a);
 	free_stack(data->stack_b);
 	free(data);
-	write(STDERR_FILENO, msg, msg_size);
+	if(msg != NULL)
+		write(STDERR_FILENO, "Error\n", 6);
 	exit(1);
 }
 
@@ -63,16 +66,16 @@ void	check_arg_lst(t_data *data, char **arg_lst, unsigned int *size)
 	while (*arg_lst)
 	{
 		if (!str_isnum(*arg_lst))
-			error_exit(data, NAN_ERR, 50, arg_lst);
+			error_exit(data, NAN_ERR, 50, tmp_arg_lst);
 		number = ft_atol(*arg_lst);
 		if (number < INT_MIN || number > INT_MAX)
-			error_exit(data, LIMIT_ERR, 63, NULL);
+			error_exit(data, LIMIT_ERR, 29, tmp_arg_lst);
 
 		if (ft_lsti_find(data->stack_a, (int)number))
-			error_exit(data, DUP_ERR, 43, NULL);
+			error_exit(data, DUP_ERR, 43, tmp_arg_lst);
 		new_node = ft_lsti_newnode((int) number);
 		if (!new_node)
-			error_exit(data, MALOC_ERR, 24, NULL);
+			error_exit(data, MALLOC_ERR, 24, tmp_arg_lst);
 		new_node->index = *size;
 		ft_lsti_addback(&(data->stack_a), new_node);
 		arg_lst++;
@@ -91,10 +94,15 @@ t_lst_indexed_node	*parse_args(int argc, char **argv, t_data *data)
 	size = 0;
 	while (i < argc)
 	{
-		arg_lst = ft_split(argv[i], ' ');
-		if (!arg_lst)
-			error_exit(data, "Error: Fallo al dividir argumentos\n", 35, NULL);
-		check_arg_lst(data, arg_lst, &size);
+		if(argv[i][0] != '\0')
+		{
+			arg_lst = ft_split(argv[i], ' ');
+			if (!arg_lst)
+				error_exit(data, "Error\n", 6, NULL);
+			check_arg_lst(data, arg_lst, &size);
+		}
+		else
+			error_exit(data, "Error\n", 6, NULL);
 		i++;
 	}
 	data->size_a = size;
@@ -109,26 +117,22 @@ int	main(int argc, char **argv)
 
 	data = malloc(sizeof(t_data));
 	if (!data)
-		error_exit(data, MALOC_ERR, 45, NULL);
+		error_exit(data, MALLOC_ERR, 24, NULL);
 	data->stack_b = NULL;
 	data->stack_a = NULL;
 	data->size_a = 0;
 	data->size_b = 0;
 	data->operations = 0;
 	if (argc < 2)
-		error_exit(data, ARG_ERR, 46, NULL);
-
-	if (!parse_args(argc, argv, data))
-		return (1);
+		error_exit(data, NULL, 53, NULL);
 	
-
+	parse_args(argc, argv, data);
 	assign_indices(data);
-	if (data->stack_a)
-		print_list(data->stack_a, "Stack A");
-	push_swap(data);
-	print_list(data->stack_a, "Stack A"); //DELETE ME
-	print_list(data->stack_b, "Stack B"); //DELETE ME
-	printf("Total Operations: %d\n", data->operations); // DELETE ME
+	if (!ft_lsti_is_sorted(data->stack_a))
+	{
+		push_swap(data);
+	}
+	//print_list(data->stack_a, "A");
 	free_stack(data->stack_a);
 	free_stack(data->stack_b);
 	free(data);

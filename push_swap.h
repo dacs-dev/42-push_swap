@@ -6,7 +6,7 @@
 /*   By: krusty <krusty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:33:04 by dcid-san          #+#    #+#             */
-/*   Updated: 2025/03/27 15:30:13 by krusty           ###   ########.fr       */
+/*   Updated: 2025/03/29 00:40:06 by krusty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,28 @@
 
 # define RA 1
 # define RRA 2
+# define RB 3
+# define RRB 4
 
-# define NAN_ERR "Error: Se ha encontrado un carácter no numérico\n"
-# define DUP_ERR "Error: Se ha encontrado un valor duplicado\n"
-# define LIMIT_ERR "Error: Rango de int excedido\n"
-# define MALOC_ERR "Error: Fallo de memoria\n"
-# define ARG_ERR "Es necesario incluir 1 argumento por lo menos\n"
+# define NAN_ERR "Error\n"
+# define DUP_ERR "Error\n"
+# define LIMIT_ERR "Error\n"
+# define MALLOC_ERR "Error\n"
+# define ARG_ERR "Error\n"
+
+# define NAN_ERR_BACK "Error\nSe ha encontrado un carácter no numérico\n"
+# define DUP_ERR_BACK "Error\nSe ha encontrado un valor duplicado\n"
+# define LIMIT_ERR_BACK "Error\nRango de int excedido\n"
+# define MALLOC_ERR_BACK "Error\nFallo de memoria\n"
+# define ARG_ERR_BACK "Error\nEs necesario incluir 1 argumento por lo menos\n"
+
+typedef struct s_cost {
+    int cost_a;
+    int cost_b;
+    int total_cost;
+    int direction_a;
+    int direction_b; 
+} t_cost;
 
 typedef struct s_lst_indexed_node
 {
@@ -60,25 +76,28 @@ t_lst_indexed_node	*ft_lsti_addfront(t_lst_indexed_node **start,
 						t_lst_indexed_node *node);
 t_lst_indexed_node	*ft_lsti_last(t_lst_indexed_node *lst);
 int					ft_lsti_find(t_lst_indexed_node *node, int num);
+unsigned int		ft_lsti_find_index(t_lst_indexed_node *node,
+						unsigned int num);
 void				free_stack(t_lst_indexed_node *stack);
 void				print_list(t_lst_indexed_node *stack,
 						const char *stack_name);
 void				ft_lsti_deletenode(t_lst_indexed_node **head,
 						t_lst_indexed_node *node);
 int					ft_lsti_find_smallest(t_lst_indexed_node *node);
+int					ft_lsti_is_sorted(t_lst_indexed_node *stack);
 
 // Funcion para parsear los argumentos del programa
 t_lst_indexed_node	*parse_args(int argc, char **argv, t_data *data);
-void				sa(t_data *data);
-void				sb(t_data *data);
+void				sa(t_data *data, int show_msg);
+void				sb(t_data *data, int show_msg);
 void				ss(t_data *data);
 void				pa(t_data *data);
 void				pb(t_data *data);
-void				ra(t_data *data);
-void				rb(t_data *data);
+void				ra(t_data *data, int show_msg);
+void				rb(t_data *data, int show_msg);
 void				rr(t_data *data);
-void				rra(t_data *data);
-void				rrb(t_data *data);
+void				rra(t_data *data, int show_msg);
+void				rrb(t_data *data, int show_msg);
 void				rrr(t_data *data);
 
 void				assign_indices(t_data *data);

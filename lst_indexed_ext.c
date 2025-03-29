@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lst_indexed.c                                      :+:      :+:    :+:   */
+/*   lst_indexed_ext.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcid-san <dcid-san@student.42madrid.com>   #+#  +:+       +#+        */
+/*   By: krusty <krusty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-27 16:04:19 by dcid-san          #+#    #+#             */
-/*   Updated: 2025-03-27 16:04:19 by dcid-san         ###   ########.fr       */
+/*   Created: 2025/03/27 16:04:19 by dcid-san          #+#    #+#             */
+/*   Updated: 2025/03/28 17:24:24 by krusty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,21 @@ int	ft_lsti_find(t_lst_indexed_node *node, int num)
 		node = node->next;
 	}
 	return (0);
+}
+
+unsigned int	ft_lsti_find_index(t_lst_indexed_node *node, unsigned int num)
+{
+	unsigned int	count;
+
+	count = 0;
+	while (node)
+	{
+		if (node->index == num)
+			break ;
+		node = node->next;
+		count ++;
+	}
+	return (count);
 }
 
 int	ft_lsti_find_smallest(t_lst_indexed_node *node)
