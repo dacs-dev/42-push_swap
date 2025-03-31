@@ -29,15 +29,15 @@ void	ft_free_split(char **arr)
 
 int ft_lsti_is_sorted(t_lst_indexed_node *stack)
 {
-
-	while (stack->next)
-	{
-		if (stack->index != stack->next->index - 1)
-			return 0;
-		stack = stack->next;
-	}
-	return 1;
+    while (stack && stack->next)
+    {
+        if (stack->value > stack->next->value)
+            return 0;
+        stack = stack->next;
+    }
+    return 1;
 }
+
 
 
 

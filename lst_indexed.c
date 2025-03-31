@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_indexed.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcid-san <dcid-san@student.42madrid.com>   #+#  +:+       +#+        */
+/*   By: krusty <krusty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-27 16:04:19 by dcid-san          #+#    #+#             */
-/*   Updated: 2025-03-27 16:04:19 by dcid-san         ###   ########.fr       */
+/*   Created: 2025/03/27 16:04:19 by dcid-san          #+#    #+#             */
+/*   Updated: 2025/03/31 07:17:59 by krusty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ t_lst_indexed_node	*ft_lsti_newnode(int value)
 		return (NULL);
 	node->value = value;
 	node->index = 0;
+	node->target = NULL;
+	node->cheapest = 0;
 	node->prev = NULL;
 	node->next = NULL;
 	return (node);

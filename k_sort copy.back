@@ -1,8 +1,10 @@
 #include "push_swap.h"
 
-// Supón que tienes funciones auxiliares:
-// - get_position(stack, index): retorna la posición del nodo con ese índice en la pila.
-// - get_insertion_position(stack_b, index): retorna la posición donde el nodo con ese índice debe insertarse en B.
+unsigned int	ft_min(unsigned int a, unsigned int b)
+{
+	return (a < b) ? a : b;
+}
+
 
 unsigned int find_max_index(t_lst_indexed_node *stack)
 {
@@ -100,53 +102,6 @@ unsigned int	get_insertion_position(t_lst_indexed_node *stack_b, unsigned int in
 	return (0);
 }
 
-t_cost compute_cost(t_data *data, t_lst_indexed_node *node, unsigned int original_size) {
-	t_cost cost;
-	unsigned int pos_a = ft_lsti_find_index(data -> stack_a, node->index);
-	
-	// Calcular costo para mover el nodo en A
-	if (pos_a <= original_size / 2) {
-		cost.cost_a = pos_a;
-		cost.direction_a = RA;
-	} else {
-		cost.cost_a = original_size - pos_a;
-		cost.direction_a = RRA;
-	}
-	unsigned int pos_b = get_insertion_position(data->stack_b, node->index);
-	// Calcular costo para posicionarlo correctamente en B
-	if (pos_b <= data->size_b / 2)
-	{
-		cost.cost_b = pos_b;
-		cost.direction_b = RB;
-	} else
-	{
-		cost.cost_b = data->size_b - pos_b;
-		cost.direction_b = RRB;
-	}
-	cost.total_cost = cost.cost_a + cost.cost_b;
-	return cost;
-}
-
-void	move_chunk_a(t_data *data)
-{
-	unsigned int max_index;
-	int rotate_type;
-
-	while (data->stack_b != NULL)
-	{
-		max_index = find_max_index(data->stack_b);
-		rotate_type = calc_rotate_direction_b(data, max_index);
-		while (data->stack_b->index != max_index)
-		{
-			if (rotate_type == RB)
-				rb(data, 1);
-			else
-				rrb(data, 1);
-		}
-		pa(data);
-	}
-}
-
 void execute_optimal_move(t_data *data, t_cost cost) {
 	// Si ambos movimientos son en la misma dirección, se pueden combinar.
 	while (cost.cost_a > 0 && cost.cost_b > 0 && cost.direction_a == cost.direction_b) {
@@ -178,28 +133,64 @@ void execute_optimal_move(t_data *data, t_cost cost) {
 	pb(data);
 }
 
+t_cost compute_cost(t_data *data, t_lst_indexed_node *node, unsigned int original_size_a)
+{
+	t_cost cost;
+	unsigned int pos_a;
+	unsigned int pos_b;
 
-void process_chunk(t_data *data, unsigned int min_index, unsigned int max_index, unsigned int original_size) {
-	t_lst_indexed_node *current = data->stack_a;
-	t_cost best_cost;
-	t_lst_indexed_node *best_node = NULL;
-	best_cost.total_cost = INT_MAX; // Inicializamos con un valor alto
-
-	// Recorremos la pila A para encontrar el elemento del chunk actual
-	// con el menor costo para moverlo.
-	while (current) {
-		if (current->index >= min_index && current->index <= max_index) {
-			t_cost cost = compute_cost(data, current, original_size);
-			if (cost.total_cost < best_cost.total_cost) {
-				best_cost = cost;
-				best_node = current;
-			}
-		}
-		current = current->next;
+	// Posición en stack A del nodo a insertar (basado en index)
+	pos_a = ft_lsti_find_index(data->stack_a, node->index);
+	if (pos_a <= original_size_a / 2)
+	{
+		cost.cost_a = pos_a;
+		cost.direction_a = RA;
 	}
-	if (best_node)
-		execute_optimal_move(data, best_cost);
+	else
+	{
+		cost.cost_a = original_size_a - pos_a;
+		cost.direction_a = RRA;
+	}
+
+	// Posición de inserción óptima en B
+	pos_b = get_insertion_position(data->stack_b, node->index);
+	if (pos_b <= data->size_b / 2)
+	{
+		cost.cost_b = pos_b;
+		cost.direction_b = RB;
+	}
+	else
+	{
+		cost.cost_b = data->size_b - pos_b;
+		cost.direction_b = RRB;
+	}
+
+	cost.total_cost = cost.cost_a + cost.cost_b;
+	return cost;
 }
+
+
+void	move_chunk_a(t_data *data)
+{
+	unsigned int max_index;
+	int rotate_type;
+
+	while (data->stack_b != NULL)
+	{
+		max_index = find_max_index(data->stack_b);
+		rotate_type = calc_rotate_direction_b(data, max_index);
+		while (data->stack_b->index != max_index)
+		{
+			if (rotate_type == RB)
+				rb(data, 1);
+			else
+				rrb(data, 1);
+		}
+		pa(data);
+	}
+}
+
+
 
 int	is_chunk_on_a(t_lst_indexed_node *node, unsigned int min_index,
 	unsigned int max_index)
@@ -220,7 +211,7 @@ void process_chunk_optimized(t_data *data, unsigned int min_index, unsigned int 
         if (data->stack_a->index >= min_index && data->stack_a->index <= max_index)
         {
             pb(data);
-            if (data->stack_b->index < (min_index + max_index) / 2)
+            if (data->stack_b->index < (min_index + max_index) / 2 && data->size_b > 1)
                 rb(data, 1);  // empuja abajo los pequeños
         }
         else
@@ -248,15 +239,15 @@ unsigned int	calc_chunkn(unsigned int size)
 	else if (size <= 100)
 		return (5);
 	else if (size <= 500)
-		return (10);
-	else
 		return (25);
+	else
+		return (18);
 }
 
 
 
 
-void final_sort(t_data *data, unsigned int original_size)
+void final_sort(t_data *data, unsigned int start_size)
 {
     t_lst_indexed_node *current;
     int min_pos;
@@ -279,14 +270,14 @@ void final_sort(t_data *data, unsigned int original_size)
         current = current->next;
     }
     // Si el nodo con índice 0 no está en la cima, rotamos hasta que lo esté.
-    if (min_pos <= (int)(original_size / 2))
+    if (min_pos <= (int)(start_size / 2))
     {
         while (min_pos-- > 0)
             ra(data, 1);
     }
     else
     {
-        int moves = original_size - min_pos;
+        int moves = start_size - min_pos;
         while (moves-- > 0)
             rra(data, 1);
     }
@@ -298,17 +289,17 @@ void k_sort(t_data *data, unsigned int k)
     unsigned int min_index;
     unsigned int max_index;
     unsigned int i;
-    unsigned int original_size;
+    unsigned int start_size;
 
-	original_size = data->size_a;
+	start_size = data->size_a;
     i = 0;
-    chunk_size = (original_size + k - 1) / k;
+    chunk_size = (start_size + k - 1) / k;
 	while (i < k)
 	{
 		min_index = i * chunk_size;
 		max_index = min_index + chunk_size - 1;
-		if (max_index >= original_size)
-			max_index = original_size - 1;
+		if (max_index >= start_size)
+			max_index = start_size - 1;
 
 		
 		// Mientras queden elementos en stack_a dentro del rango del chunk, procesa uno a uno.
@@ -328,7 +319,7 @@ void k_sort(t_data *data, unsigned int k)
     move_chunk_a(data);
 	// print_list(data->stack_a, "Stack, A");
 	// print_list(data->stack_a, "Stack, A");
-	final_sort(data, original_size);
+	//final_sort(data, original_size);
 }
 
 	

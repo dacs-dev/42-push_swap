@@ -6,7 +6,7 @@
 /*   By: krusty <krusty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:04:03 by dcid-san          #+#    #+#             */
-/*   Updated: 2025/03/29 00:41:45 by krusty           ###   ########.fr       */
+/*   Updated: 2025/03/31 02:07:18 by krusty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	assign_indices(t_data *data)
 	int					*values;
 	unsigned int					i;
 	t_lst_indexed_node	*current;
-
+	
 	values = create_int_lst(data);
 	ft_lstsort_int(values, data->size_a);
 	current = data->stack_a;

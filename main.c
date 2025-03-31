@@ -6,7 +6,7 @@
 /*   By: krusty <krusty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:36:53 by dcid-san          #+#    #+#             */
-/*   Updated: 2025/03/29 01:42:14 by krusty           ###   ########.fr       */
+/*   Updated: 2025/03/31 07:21:33 by krusty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,12 +127,15 @@ int	main(int argc, char **argv)
 		error_exit(data, NULL, 53, NULL);
 	
 	parse_args(argc, argv, data);
-	assign_indices(data);
+	//assign_indices(data);
+	//print_list(data->stack_a, "Start A");
 	if (!ft_lsti_is_sorted(data->stack_a))
 	{
 		push_swap(data);
 	}
-	//print_list(data->stack_a, "A");
+	
+	//assign_indices(data);
+	//print_list(data->stack_a, "Final A");
 	free_stack(data->stack_a);
 	free_stack(data->stack_b);
 	free(data);

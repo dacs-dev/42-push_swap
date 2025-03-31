@@ -6,7 +6,7 @@
 /*   By: krusty <krusty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:32:56 by dcid-san          #+#    #+#             */
-/*   Updated: 2025/03/28 22:55:01 by krusty           ###   ########.fr       */
+/*   Updated: 2025/03/31 03:47:59 by krusty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void pa(t_data *data)
 
 	if (data->stack_b)
 	{
+
 		to_move = data->stack_b;
 		data->stack_b = data->stack_b->next;
 		if (data->stack_b)
@@ -90,8 +91,7 @@ void pa(t_data *data)
 		data->size_b--;
 		data->size_a++;
 		data->operations++;
-		// //print_list(data->stack_a, "Stack A After pa\n");
-		// //print_list(data->stack_b, "Stack B After pa\n");
+
 		write(1, "pa\n", 3);
 	}
 }
@@ -102,17 +102,18 @@ void pb(t_data *data)
 
 	if (data->stack_a)
 	{
+
 		to_move = data->stack_a;
-		data->stack_a = data->stack_a->next;
-		if (data->stack_a)
-			data->stack_a->prev = NULL;
-		ft_lsti_addfront(&(data->stack_b), to_move);
-		data->size_a--;
-		data->size_b++;
-		data->operations++;
-		//print_list(data->stack_a, "Stack A After pb\n");
-		//print_list(data->stack_b, "Stack B After pb\n");
-		write(1, "pb\n", 3);
+        data->stack_a = data->stack_a->next;
+        if (data->stack_a)
+            data->stack_a->prev = NULL;
+        to_move->next = NULL; // Ensure the node is detached
+        ft_lsti_addfront(&(data->stack_b), to_move);
+        data->size_a--;
+        data->size_b++;
+        data->operations++;
+        write(1, "pb\n", 3);
+
 	}
 }
 

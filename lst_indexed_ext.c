@@ -6,7 +6,7 @@
 /*   By: krusty <krusty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:04:19 by dcid-san          #+#    #+#             */
-/*   Updated: 2025/03/28 17:24:24 by krusty           ###   ########.fr       */
+/*   Updated: 2025/03/31 03:46:41 by krusty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,33 +23,31 @@ int	ft_lsti_find(t_lst_indexed_node *node, int num)
 	return (0);
 }
 
-unsigned int	ft_lsti_find_index(t_lst_indexed_node *node, unsigned int num)
+t_lst_indexed_node	*ft_lsti_find_max(t_lst_indexed_node *stack)
 {
-	unsigned int	count;
-
-	count = 0;
-	while (node)
-	{
-		if (node->index == num)
-			break ;
-		node = node->next;
-		count ++;
-	}
-	return (count);
+    t_lst_indexed_node	*biggest;
+	
+	biggest = stack;
+    while (stack) {
+        if (stack->value > biggest->value)
+            biggest = stack;
+        stack = stack->next;
+    }
+    return biggest;
 }
 
-int	ft_lsti_find_smallest(t_lst_indexed_node *node)
+t_lst_indexed_node	*ft_lsti_find_smallest(t_lst_indexed_node *node)
 {
-	int num;
+	t_lst_indexed_node	*curr_min;
 
-	num = node->value;
+	curr_min = node;
 	while (node)
 	{
-		if (node->value <= num)
-			num = node->value;
+		if (node->value < curr_min->value)
+			curr_min = node;
 		node = node->next;
 	}
-	return (num);
+	return (curr_min);
 }
 
 t_lst_indexed_node	*ft_lsti_addback(t_lst_indexed_node **lst,
