@@ -50,16 +50,3 @@ char	*ft_itoa(int n)
 		str[0] = '-';
 	return (str);
 }
-
-/* #include <stdio.h>
-int main(void)
-{
-	char *str1 = ft_itoa(0);
-	printf("%s\n", str1);
-	char *str2 = ft_itoa(2147483647);
-	printf("%s\n", str2);
-	char *str3 = ft_itoa(-2147483648);
-	printf("%s\n", str3);
-	return (0);
-}
- */

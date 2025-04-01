@@ -12,9 +12,8 @@
 
 #include "libft.h"
 #include <stdlib.h>
-#include <stdio.h>
 
-static char *fill_trimed(unsigned long len, char const *s1, char const *set)
+static char	*fill_trimed(unsigned long len, char const *s1, char const *set)
 {
 	char	*trimedstr;
 
@@ -35,7 +34,7 @@ static char *fill_trimed(unsigned long len, char const *s1, char const *set)
 			return (NULL);
 		trimedstr[0] = '\0';
 	}
-	return trimedstr;
+	return (trimedstr);
 }
 
 char	*ft_strtrim(char const *s1, char const *set)
@@ -48,15 +47,5 @@ char	*ft_strtrim(char const *s1, char const *set)
 	while (ft_strchr(set, s1[++i]) && s1[i])
 		len--;
 	s1 += i;
-	
 	return (fill_trimed(len, s1, set));
 }
-
-/* int main (void)
-{
-	//char *s1 = "  \t \t \n   \n\n\n\t";
-	//char *s2 = "";
-	char *ret = ft_strtrim("", "");
-	printf("\nResponse:%s\n", ret);
-	return (0);
-} */

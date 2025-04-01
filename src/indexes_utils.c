@@ -12,47 +12,39 @@
 
 #include "push_swap.h"
 
-static int	*create_int_lst(t_data *data)
+void	ft_lsti_refresh_index(t_lsti_node *node)
 {
-	int					*values;
-	t_lst_indexed_node	*current;
-	unsigned int			i;
+	int	i;
+	int	median;
 
-	values = malloc(data->size_a * sizeof(int));
-	if (values == NULL)
-		error_exit(data, MALLOC_ERR, 24, NULL);
 	i = 0;
-	current = data->stack_a;
-	while (i < data-> size_a)
+	if (!node)
+		return ;
+	median = ft_lsti_len(node) / 2;
+	while (node)
 	{
-		values[i++] = current->value;
-		current = current->next;
+		node->index = i;
+		if (i <= median)
+			node->above_median = 1;
+		else
+			node->above_median = 0;
+		node = node->next;
+		++i;
 	}
-	return (values);
 }
 
-void	assign_indices(t_data *data)
+void	refresh_stack_a(t_lsti_node *stack_a, t_lsti_node *stack_b)
 {
-	int					*values;
-	unsigned int					i;
-	t_lst_indexed_node	*current;
-	
-	values = create_int_lst(data);
-	ft_lstsort_int(values, data->size_a);
-	current = data->stack_a;
-	while (current != NULL)
-	{
-		i = 0;
-		while (i < data-> size_a)
-		{
-			if (current->value == *(values + i))
-			{
-				current->index = i;
-				break ;
-			}
-			i++;
-		}
-		current = current->next;
-	}
-	free(values);
+	ft_lsti_refresh_index(stack_a);
+	ft_lsti_refresh_index(stack_b);
+	set_target_a(stack_a, stack_b);
+	set_cost_pa(stack_a, stack_b);
+	ft_lsti_mark_cheap(stack_a);
+}
+
+void	refresh_stack_b(t_lsti_node *stack_a, t_lsti_node *stack_b)
+{
+	ft_lsti_refresh_index(stack_a);
+	ft_lsti_refresh_index(stack_b);
+	set_target_b(stack_a, stack_b);
 }

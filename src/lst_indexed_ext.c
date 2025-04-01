@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-int	ft_lsti_find(t_lst_indexed_node *node, int num)
+int	ft_lsti_find(t_lsti_node *node, int num)
 {
 	while (node)
 	{
@@ -23,22 +23,23 @@ int	ft_lsti_find(t_lst_indexed_node *node, int num)
 	return (0);
 }
 
-t_lst_indexed_node	*ft_lsti_find_max(t_lst_indexed_node *stack)
+t_lsti_node	*ft_lsti_find_max(t_lsti_node *stack)
 {
-    t_lst_indexed_node	*biggest;
-	
+	t_lsti_node	*biggest;
+
 	biggest = stack;
-    while (stack) {
-        if (stack->value > biggest->value)
-            biggest = stack;
-        stack = stack->next;
-    }
-    return biggest;
+	while (stack)
+	{
+		if (stack->value > biggest->value)
+			biggest = stack;
+		stack = stack->next;
+	}
+	return (biggest);
 }
 
-t_lst_indexed_node	*ft_lsti_find_smallest(t_lst_indexed_node *node)
+t_lsti_node	*ft_lsti_find_smallest(t_lsti_node *node)
 {
-	t_lst_indexed_node	*curr_min;
+	t_lsti_node	*curr_min;
 
 	curr_min = node;
 	while (node)
@@ -50,10 +51,10 @@ t_lst_indexed_node	*ft_lsti_find_smallest(t_lst_indexed_node *node)
 	return (curr_min);
 }
 
-t_lst_indexed_node	*ft_lsti_addback(t_lst_indexed_node **lst,
-					t_lst_indexed_node *new_node)
+t_lsti_node	*ft_lsti_addback(t_lsti_node **lst,
+					t_lsti_node *new_node)
 {
-	t_lst_indexed_node	*last;
+	t_lsti_node	*last;
 
 	if (!*lst)
 	{
@@ -71,10 +72,10 @@ t_lst_indexed_node	*ft_lsti_addback(t_lst_indexed_node **lst,
 	return (*lst);
 }
 
-void	free_stack(t_lst_indexed_node *stack)
+void	free_stack(t_lsti_node *stack)
 {
-	t_lst_indexed_node	*current;
-	t_lst_indexed_node	*next;
+	t_lsti_node	*current;
+	t_lsti_node	*next;
 
 	current = stack;
 	while (current)
